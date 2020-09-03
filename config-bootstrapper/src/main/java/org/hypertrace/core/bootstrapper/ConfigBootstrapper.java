@@ -23,6 +23,10 @@ public class ConfigBootstrapper {
     bootstrapper(bootstrapArgs).execute(bootstrapArgs);
   }
 
+  /**
+   * Helps in running bootstrapping as a background task in non-concurrent mode.
+   * <p> e.g It is used in https://github.com/hypertrace/hypertrace-federated-service
+   * */
   public static BootstrapRunner bootstrapper(BootstrapArgs bootstrapArgs) {
     Config config = ConfigFactory.parseFile(new File(bootstrapArgs.getConfigFile())).resolve();
     String dataStoreType = config.getString(DocumentStoreConfig.DATASTORE_TYPE_CONFIG_KEY);
