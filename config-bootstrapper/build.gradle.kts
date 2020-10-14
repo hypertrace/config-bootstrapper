@@ -60,7 +60,7 @@ tasks.register<DockerStopContainer>("stopMongoContainer") {
 }
 
 tasks.register<DockerPullImage>("pullAttributeServiceImage") {
-  image.set("hypertrace/attribute-service:0.1.9")
+  image.set("hypertrace/attribute-service:0.4.3")
 }
 
 tasks.register<DockerCreateContainer>("createAttributeServiceContainer") {
@@ -138,7 +138,7 @@ dependencies {
   implementation("org.apache.logging.log4j:log4j-api:2.13.3")
   implementation("org.apache.logging.log4j:log4j-core:2.13.3")
   implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.13.3")
-  implementation("org.apache.httpcomponents:httpclient:4.5.10")
+  implementation("org.apache.httpcomponents:httpclient:4.5.13")
   implementation ("commons-io:commons-io:2.6")
   implementation("com.typesafe:config:1.4.0")
   implementation("com.google.protobuf:protobuf-java:3.12.2")
