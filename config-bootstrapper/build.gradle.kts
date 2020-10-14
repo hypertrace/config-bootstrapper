@@ -60,7 +60,7 @@ tasks.register<DockerStopContainer>("stopMongoContainer") {
 }
 
 tasks.register<DockerPullImage>("pullAttributeServiceImage") {
-  image.set("hypertrace/attribute-service:0.4.3")
+  image.set("hypertrace/attribute-service:0.1.9")
 }
 
 tasks.register<DockerCreateContainer>("createAttributeServiceContainer") {
