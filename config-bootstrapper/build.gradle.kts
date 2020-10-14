@@ -129,9 +129,9 @@ tasks.test {
 }
 
 dependencies {
-  implementation("org.hypertrace.entity.service:entity-service-client:0.1.17")
+  implementation("org.hypertrace.entity.service:entity-service-client:0.1.25")
   implementation("org.hypertrace.core.documentstore:document-store:0.3.2")
-  implementation("org.hypertrace.core.attribute.service:attribute-service-client:0.3.0")
+  implementation("org.hypertrace.core.attribute.service:attribute-service-client:0.4.3")
   implementation("org.hypertrace.core.grpcutils:grpc-context-utils:0.2.0")
 
   implementation("org.slf4j:slf4j-api:1.7.30")
