@@ -33,15 +33,10 @@ public class BootstrapContext {
         entityServiceClientConfig.getHost(), entityServiceClientConfig.getPort())
         .usePlaintext().build();
     this.entityTypeServiceClient = new EntityTypeServiceClient(entityServiceChannel);
-
-    ManagedChannel entityTypeServiceChannel = ManagedChannelBuilder.forAddress(
-        entityServiceClientConfig.getHost(), entityServiceClientConfig.getPort())
-        .usePlaintext().build();
     this.entityTypeServiceClientV2 =
-        new org.hypertrace.entity.type.client.EntityTypeServiceClient(entityTypeServiceChannel);
+        new org.hypertrace.entity.type.client.EntityTypeServiceClient(entityServiceChannel);
 
-    managedChannels = List.of(attributeServiceChannel, entityServiceChannel,
-        entityTypeServiceChannel);
+    managedChannels = List.of(attributeServiceChannel, entityServiceChannel);
   }
 
   public static BootstrapContext buildFrom(Config config) {

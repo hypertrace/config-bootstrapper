@@ -87,11 +87,11 @@ tasks.register<DockerStopContainer>("stopAttributeServiceContainer") {
 }
 
 tasks.register<DockerPullImage>("pullEntityServiceImage") {
-  image.set("hypertrace/entity-service:latest")
+  image.set("hypertrace/entity-service:0.1.26")
 }
 
 tasks.register<DockerCreateContainer>("createEntityServiceContainer") {
-//  dependsOn("pullEntityServiceImage")
+  dependsOn("pullEntityServiceImage")
   targetImageId(tasks.getByName<DockerPullImage>("pullEntityServiceImage").image)
   containerName.set("entity-service-local")
   envVars.put("SERVICE_NAME", "entity-service")
@@ -129,8 +129,8 @@ tasks.test {
 }
 
 dependencies {
-  implementation("org.hypertrace.entity.service:entity-service-client:0.1.26-SNAPSHOT")
-  implementation("org.hypertrace.entity.service:entity-service-api:0.1.26-SNAPSHOT")
+  implementation("org.hypertrace.entity.service:entity-service-client:0.1.26")
+  implementation("org.hypertrace.entity.service:entity-service-api:0.1.26")
   implementation("org.hypertrace.core.documentstore:document-store:0.3.2")
   implementation("org.hypertrace.core.attribute.service:attribute-service-client:0.4.3")
   implementation("org.hypertrace.core.grpcutils:grpc-context-utils:0.2.0")
