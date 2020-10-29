@@ -155,10 +155,6 @@ dependencies {
     because("https://snyk.io/vuln/SNYK-JAVA-IONETTY-1020439")
   }
 
-  runtimeOnly("com.google.guava:guava:30.0-android") {
-    because("https://snyk.io/vuln/SNYK-JAVA-COMGOOGLEGUAVA-1015415")
-  }
-
   testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
   testImplementation("org.mockito:mockito-core:3.3.3")
 
