@@ -45,7 +45,7 @@ spec:
       {{- toYaml . | nindent 8}}
     {{- end }}
       initContainers:
-        {{- if or (eq .Values.job.prefix "default") (eq .Values.job.prefix "attribute") (eq .Values.job.prefix "attribute-entity") }}
+        {{- if or (eq .Values.job.prefix "default") (eq .Values.job.prefix "attribute") (eq .Values.job.prefix "attribute-and-entity") }}
         - name: attribute-service-ready
           image: busybox
           imagePullPolicy: IfNotPresent
