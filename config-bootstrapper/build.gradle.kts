@@ -5,13 +5,14 @@ import com.bmuschko.gradle.docker.tasks.image.DockerPullImage
 import com.bmuschko.gradle.docker.tasks.network.DockerCreateNetwork
 
 plugins {
-  java
+  `java-library`
   application
   jacoco
   id("org.hypertrace.docker-java-application-plugin")
   id("org.hypertrace.docker-publish-plugin")
   id("org.hypertrace.integration-test-plugin")
   id("org.hypertrace.jacoco-report-plugin")
+  id("org.hypertrace.publish-plugin")
 }
 
 application {
