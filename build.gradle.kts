@@ -11,6 +11,12 @@ plugins {
 subprojects {
   group = "org.hypertrace.core.bootstrapper"
 
+  pluginManager.withPlugin("org.hypertrace.publish-plugin") {
+    configure<HypertracePublishExtension> {
+      license.set(License.APACHE_2_0)
+    }
+  }
+
   pluginManager.withPlugin("java") {
     configure<JavaPluginExtension> {
       sourceCompatibility = JavaVersion.VERSION_11
