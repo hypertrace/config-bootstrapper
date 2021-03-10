@@ -36,7 +36,7 @@ tasks.register<com.bmuschko.gradle.docker.tasks.network.DockerRemoveNetwork>("re
 }
 
 tasks.register<DockerPullImage>("pullMongoImage") {
-  image.set("mongo:4.2.6")
+  image.set("mongo:4.4.0")
 }
 
 tasks.register<DockerCreateContainer>("createMongoContainer") {
@@ -60,7 +60,7 @@ tasks.register<DockerStopContainer>("stopMongoContainer") {
 }
 
 tasks.register<DockerPullImage>("pullAttributeServiceImage") {
-  image.set("hypertrace/attribute-service:0.1.9")
+  image.set("hypertrace/attribute-service:0.10.2")
 }
 
 tasks.register<DockerCreateContainer>("createAttributeServiceContainer") {
@@ -129,12 +129,12 @@ tasks.test {
 }
 
 dependencies {
-  implementation("org.hypertrace.entity.service:entity-service-client:0.4.1")
-  implementation("org.hypertrace.entity.service:entity-service-api:0.4.1")
-  implementation("org.hypertrace.core.documentstore:document-store:0.5.3")
-  implementation("org.hypertrace.core.attribute.service:attribute-service-client:0.8.2")
-  implementation("org.hypertrace.core.grpcutils:grpc-context-utils:0.3.1")
-  implementation("org.hypertrace.core.grpcutils:grpc-client-utils:0.3.1")
+  implementation("org.hypertrace.entity.service:entity-service-client:0.5.12")
+  implementation("org.hypertrace.entity.service:entity-service-api:0.5.12")
+  implementation("org.hypertrace.core.documentstore:document-store:0.5.4")
+  implementation("org.hypertrace.core.attribute.service:attribute-service-client:0.10.2")
+  implementation("org.hypertrace.core.grpcutils:grpc-context-utils:0.3.4")
+  implementation("org.hypertrace.core.grpcutils:grpc-client-utils:0.3.4")
 
   implementation("org.slf4j:slf4j-api:1.7.30")
   implementation("org.apache.logging.log4j:log4j-api:2.13.3")
@@ -150,8 +150,8 @@ dependencies {
   implementation("com.fasterxml.jackson.core:jackson-core:2.11.1")
   implementation("com.fasterxml.jackson.core:jackson-databind:2.11.1")
 
-  runtimeOnly("io.grpc:grpc-netty:1.33.0")
-  runtimeOnly("io.netty:netty-handler-proxy:4.1.59.Final")
+  runtimeOnly("io.grpc:grpc-netty:1.36.0")
+  runtimeOnly("io.netty:netty-handler-proxy:4.1.60.Final")
   constraints {
     implementation("com.google.guava:guava:30.0-jre") {
       because("Information Disclosure [Medium Severity][https://snyk.io/vuln/SNYK-JAVA-COMGOOGLEGUAVA-1015415] in com.google.guava:guava@29.0-android")
@@ -164,6 +164,6 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
   testImplementation("org.mockito:mockito-core:3.3.3")
 
-  integrationTestImplementation("org.hypertrace.core.serviceframework:integrationtest-service-framework:0.1.19")
+  integrationTestImplementation("org.hypertrace.core.serviceframework:integrationtest-service-framework:0.1.21")
   integrationTestImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
 }
