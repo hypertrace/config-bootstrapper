@@ -100,7 +100,7 @@ tasks.register<DockerCreateContainer>("createEntityServiceContainer") {
   envVars.put("CLUSTER_NAME", "test")
   exposePorts("tcp", listOf(50061))
   hostConfig.portBindings.set(listOf("50061:50061"))
-  hostConfig.binds.put("$projectDir/src/integrationTest/resources/config-entity-service-test/application.conf", "/app/resources/configs/entity-service/test/application.conf")
+  hostConfig.binds.put("${projectDir}/src/integrationTest/resources/config-entity-service-test/application.conf", "/app/resources/configs/entity-service/test/application.conf")
   hostConfig.network.set(tasks.getByName<DockerCreateNetwork>("createIntegrationTestNetwork").networkId)
   hostConfig.autoRemove.set(true)
 }
