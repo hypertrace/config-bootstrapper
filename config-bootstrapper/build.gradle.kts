@@ -87,7 +87,7 @@ tasks.register<DockerStopContainer>("stopAttributeServiceContainer") {
 }
 
 tasks.register<DockerPullImage>("pullEntityServiceImage") {
-  image.set("hypertrace/entity-service:0.1.26")
+  image.set("hypertrace/entity-service:0.5.12")
 }
 
 tasks.register<DockerCreateContainer>("createEntityServiceContainer") {
