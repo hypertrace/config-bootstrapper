@@ -148,7 +148,7 @@ dependencies {
   implementation("com.fasterxml.jackson.core:jackson-databind:2.11.1")
 
   runtimeOnly("io.grpc:grpc-netty:1.36.0")
-  runtimeOnly("io.netty:netty-handler-proxy:4.1.60.Final")
+
   constraints {
     implementation("com.google.guava:guava:30.0-jre") {
       because("Information Disclosure [Medium Severity][https://snyk.io/vuln/SNYK-JAVA-COMGOOGLEGUAVA-1015415] in com.google.guava:guava@29.0-android")
