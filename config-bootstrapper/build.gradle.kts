@@ -70,6 +70,7 @@ tasks.register<DockerCreateContainer>("createAttributeServiceContainer") {
   envVars.put("SERVICE_NAME", "attribute-service")
   envVars.put("MONGO_HOST", tasks.getByName<DockerCreateContainer>("createMongoContainer").containerName)
   exposePorts("tcp", listOf(9012))
+  hostConfig.portBindings.set(listOf("9012:9012"))
   hostConfig.network.set(tasks.getByName<DockerCreateNetwork>("createIntegrationTestNetwork").networkId)
   hostConfig.autoRemove.set(true)
 }
