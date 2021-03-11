@@ -68,10 +68,9 @@ tasks.register<DockerCreateContainer>("createAttributeServiceContainer") {
   targetImageId(tasks.getByName<DockerPullImage>("pullAttributeServiceImage").image)
   containerName.set("attribute-service-local")
   envVars.put("SERVICE_NAME", "attribute-service")
-  envVars.put("mongo_host", tasks.getByName<DockerCreateContainer>("createMongoContainer").containerName)
+  envVars.put("MONGO_HOST", tasks.getByName<DockerCreateContainer>("createMongoContainer").containerName)
   exposePorts("tcp", listOf(9012))
   hostConfig.network.set(tasks.getByName<DockerCreateNetwork>("createIntegrationTestNetwork").networkId)
-  hostConfig.portBindings.set(listOf("9012:9012"))
   hostConfig.autoRemove.set(true)
 }
 
@@ -95,12 +94,9 @@ tasks.register<DockerCreateContainer>("createEntityServiceContainer") {
   targetImageId(tasks.getByName<DockerPullImage>("pullEntityServiceImage").image)
   containerName.set("entity-service-local")
   envVars.put("SERVICE_NAME", "entity-service")
-  envVars.put("mongo_host", tasks.getByName<DockerCreateContainer>("createMongoContainer").containerName)
-  envVars.put("BOOTSTRAP_CONFIG_URI", "file:///app/resources/configs")
-  envVars.put("CLUSTER_NAME", "test")
+  envVars.put("MONGO_HOST", tasks.getByName<DockerCreateContainer>("createMongoContainer").containerName)
   exposePorts("tcp", listOf(50061))
   hostConfig.portBindings.set(listOf("50061:50061"))
-  hostConfig.binds.put("${projectDir}/src/integrationTest/resources/config-entity-service-test/application.conf", "/app/resources/configs/entity-service/test/application.conf")
   hostConfig.network.set(tasks.getByName<DockerCreateNetwork>("createIntegrationTestNetwork").networkId)
   hostConfig.autoRemove.set(true)
 }
