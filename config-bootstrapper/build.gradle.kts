@@ -155,7 +155,7 @@ dependencies {
     }
     runtimeOnly("io.netty:netty-codec-http2:4.1.68.Final") {
     }
-    runtimeOnly("io.netty:netty-handler-proxy:4.1.61.Final") {
+    runtimeOnly("io.netty:netty-handler-proxy:4.1.68.Final") {
       because("https://snyk.io/vuln/SNYK-JAVA-IONETTY-1083991")
     }
   }
