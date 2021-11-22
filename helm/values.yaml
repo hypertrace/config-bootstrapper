@@ -20,6 +20,10 @@ image:
 
 imagePullSecrets: []
 
+initContainers:
+  image:
+    repository: busybox
+
 nodeLabels: {}
 
 javaOpts: "-Xms256M -Xmx768M"
