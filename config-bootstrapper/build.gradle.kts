@@ -134,9 +134,9 @@ dependencies {
   implementation("org.hypertrace.core.grpcutils:grpc-client-utils:0.6.2")
 
   implementation("org.slf4j:slf4j-api:1.7.30")
-  implementation("org.apache.logging.log4j:log4j-api:2.17.0")
-  implementation("org.apache.logging.log4j:log4j-core:2.17.0")
-  implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.0")
+  implementation("org.apache.logging.log4j:log4j-api:2.17.1")
+  implementation("org.apache.logging.log4j:log4j-core:2.17.1")
+  implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.1")
   implementation("org.apache.httpcomponents:httpclient:4.5.13")
   implementation("commons-io:commons-io:2.8.0")
   implementation("com.typesafe:config:1.4.1")
