@@ -140,12 +140,12 @@ dependencies {
   implementation("org.apache.httpcomponents:httpclient:4.5.13")
   implementation("commons-io:commons-io:2.8.0")
   implementation("com.typesafe:config:1.4.1")
-  implementation("com.google.protobuf:protobuf-java:3.19.1")
-  implementation("com.google.protobuf:protobuf-java-util:3.19.1")
+  implementation("com.google.protobuf:protobuf-java:3.19.2")
+  implementation("com.google.protobuf:protobuf-java-util:3.19.2")
   implementation("commons-cli:commons-cli:1.4")
   implementation("org.reflections:reflections:0.9.12")
-  implementation("com.fasterxml.jackson.core:jackson-core:2.12.2")
-  implementation("com.fasterxml.jackson.core:jackson-databind:2.12.2")
+  implementation("com.fasterxml.jackson.core:jackson-core:2.12.6")
+  implementation("com.fasterxml.jackson.core:jackson-databind:2.12.6")
 
   runtimeOnly("io.grpc:grpc-netty:1.42.0")
 
