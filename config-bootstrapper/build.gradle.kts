@@ -144,7 +144,7 @@ dependencies {
   implementation("com.google.protobuf:protobuf-java-util:3.19.2")
   implementation("commons-cli:commons-cli:1.4")
   implementation("org.reflections:reflections:0.9.12")
-  implementation("com.fasterxml.jackson.core:jackson-core:2.13.2.2")
+  implementation("com.fasterxml.jackson.core:jackson-core:2.13.2")
   implementation("com.fasterxml.jackson.core:jackson-databind:2.13.2.2")
 
   runtimeOnly("io.grpc:grpc-netty:1.42.0")
