@@ -153,8 +153,8 @@ dependencies {
     implementation("commons-codec:commons-codec:1.15") {
       because("https://snyk.io/vuln/SNYK-JAVA-COMMONSCODEC-561518")
     }
-    runtimeOnly("io.netty:netty-codec-http2:4.1.71.Final")
-    runtimeOnly("io.netty:netty-handler-proxy:4.1.71.Final")
+    runtimeOnly("io.netty:netty-codec-http2:4.1.77.Final")
+    runtimeOnly("io.netty:netty-handler-proxy:4.1.77.Final")
   }
 
   testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
