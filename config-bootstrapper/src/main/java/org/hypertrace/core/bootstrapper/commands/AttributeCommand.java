@@ -82,6 +82,11 @@ public class AttributeCommand extends Command {
                 .map(AttributeScope::valueOf)
                 .collect(Collectors.toList()));
       }
+      if (filterConfig.hasPath("scope_string")) {
+        builder.addAllScopeString(
+            filterConfig.getStringList("scope_string")
+        );
+      }
       return builder.build();
     }
   }
