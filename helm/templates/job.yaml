@@ -47,7 +47,7 @@ spec:
       initContainers:
         {{- if or (eq .Values.job.prefix "default") (eq .Values.job.prefix "attribute") (eq .Values.job.prefix "all") }}
         - name: attribute-service-ready
-          image: busybox
+          image: {{ .Values.waitContainers.image.repository }}
           imagePullPolicy: IfNotPresent
           command: ["sh", "-c"]
           args: ["until nc -zv {{ .Values.attributeServiceConfig.data.host }} {{ .Values.attributeServiceConfig.data.port }}; \
@@ -60,7 +60,7 @@ spec:
         {{- end }}
         {{- if or (eq .Values.job.prefix "default") (eq .Values.job.prefix "entity") (eq .Values.job.prefix "all") }}
         - name: entity-service-ready
-          image: busybox
+          image: {{ .Values.waitContainers.image.repository }}
           imagePullPolicy: IfNotPresent
           command: ["sh", "-c"]
           args: ["until nc -zv {{ .Values.entityServiceConfig.data.host }} {{ .Values.entityServiceConfig.data.port }}; \
