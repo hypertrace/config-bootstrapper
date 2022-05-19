@@ -101,4 +101,6 @@ logConfig:
       enabled: false
 
 waitContainers:
+  image:
+    repository: busybox
   securityContext: {}
