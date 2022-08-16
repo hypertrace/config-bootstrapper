@@ -128,7 +128,7 @@ tasks.test {
 dependencies {
   implementation("org.hypertrace.entity.service:entity-service-client:0.6.4")
   implementation("org.hypertrace.entity.service:entity-service-api:0.6.4")
-  implementation("org.hypertrace.core.documentstore:document-store:0.6.15")
+  implementation("org.hypertrace.core.documentstore:document-store:0.7.5")
   implementation("org.hypertrace.core.attribute.service:attribute-service-client:0.12.0")
   implementation("org.hypertrace.core.grpcutils:grpc-context-utils:0.7.2")
   implementation("org.hypertrace.core.grpcutils:grpc-client-utils:0.7.2")
@@ -153,8 +153,8 @@ dependencies {
     implementation("commons-codec:commons-codec:1.15") {
       because("https://snyk.io/vuln/SNYK-JAVA-COMMONSCODEC-561518")
     }
-    runtimeOnly("io.netty:netty-codec-http2:4.1.77.Final")
-    runtimeOnly("io.netty:netty-handler-proxy:4.1.77.Final")
+    runtimeOnly("io.netty:netty-codec-http2:4.1.79.Final")
+    runtimeOnly("io.netty:netty-handler-proxy:4.1.79.Final")
   }
 
   testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
