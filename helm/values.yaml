@@ -91,6 +91,8 @@ postgresConfig:
     host: postgres
     port: 5432
     url: ""
+    passwordSecretName: ""
+    passwordSecretKey: ""
 
 logConfig:
   name: config-bootstrapper-log-appender-config
