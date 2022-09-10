@@ -60,7 +60,7 @@ tasks.register<DockerStopContainer>("stopMongoContainer") {
 }
 
 tasks.register<DockerPullImage>("pullAttributeServiceImage") {
-  image.set("hypertrace/attribute-service:0.12.0")
+  image.set("hypertrace/attribute-service:0.14.5")
 }
 
 tasks.register<DockerCreateContainer>("createAttributeServiceContainer") {
@@ -129,11 +129,11 @@ dependencies {
   implementation("org.hypertrace.entity.service:entity-service-client:0.6.4")
   implementation("org.hypertrace.entity.service:entity-service-api:0.6.4")
   implementation("org.hypertrace.core.documentstore:document-store:0.7.5")
-  implementation("org.hypertrace.core.attribute.service:attribute-service-client:0.12.0")
-  implementation("org.hypertrace.core.grpcutils:grpc-context-utils:0.7.2")
-  implementation("org.hypertrace.core.grpcutils:grpc-client-utils:0.7.2")
+  implementation("org.hypertrace.core.attribute.service:attribute-service-client:0.14.5")
+  implementation("org.hypertrace.core.grpcutils:grpc-context-utils:0.7.7")
+  implementation("org.hypertrace.core.grpcutils:grpc-client-utils:0.7.7")
 
-  implementation("org.slf4j:slf4j-api:1.7.30")
+  implementation("org.slf4j:slf4j-api:1.7.32")
   implementation("org.apache.logging.log4j:log4j-api:2.17.1")
   implementation("org.apache.logging.log4j:log4j-core:2.17.1")
   implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.1")
@@ -147,14 +147,12 @@ dependencies {
   implementation("com.fasterxml.jackson.core:jackson-core:2.13.2")
   implementation("com.fasterxml.jackson.core:jackson-databind:2.13.2.2")
 
-  runtimeOnly("io.grpc:grpc-netty:1.42.0")
+  runtimeOnly("io.grpc:grpc-netty:1.47.0")
 
   constraints {
     implementation("commons-codec:commons-codec:1.15") {
       because("https://snyk.io/vuln/SNYK-JAVA-COMMONSCODEC-561518")
     }
-    runtimeOnly("io.netty:netty-codec-http2:4.1.79.Final")
-    runtimeOnly("io.netty:netty-handler-proxy:4.1.79.Final")
   }
 
   testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
