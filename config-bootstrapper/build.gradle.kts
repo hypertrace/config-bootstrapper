@@ -149,6 +149,12 @@ dependencies {
 
   runtimeOnly("io.grpc:grpc-netty:1.47.0")
 
+  constraints {
+    implementation("commons-codec:commons-codec:1.15") {
+      because("https://snyk.io/vuln/SNYK-JAVA-COMMONSCODEC-561518")
+    }
+  }
+
   testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
   testImplementation("org.mockito:mockito-core:3.9.0")
 
