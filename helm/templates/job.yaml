@@ -44,6 +44,10 @@ spec:
       nodeSelector:
       {{- toYaml . | nindent 8}}
     {{- end }}
+    {{- with .Values.securityContext }}
+      securityContext:
+      {{- toYaml . | nindent 8}}
+    {{- end }}
       initContainers:
         {{- if or (eq .Values.job.prefix "default") (eq .Values.job.prefix "attribute") (eq .Values.job.prefix "all") }}
         - name: attribute-service-ready
