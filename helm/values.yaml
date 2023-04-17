@@ -22,6 +22,8 @@ imagePullSecrets: []
 
 nodeLabels: {}
 
+securityContext: {}
+
 javaOpts: "-Xms256M -Xmx768M"
 
 resources:
