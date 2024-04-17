@@ -17,6 +17,7 @@
 image:
   repository: hypertrace/config-bootstrapper
   pullPolicy: IfNotPresent
+  tag: ""
 
 imagePullSecrets: []
 
