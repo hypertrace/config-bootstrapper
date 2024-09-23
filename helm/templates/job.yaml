@@ -44,20 +44,24 @@ spec:
       nodeSelector:
       {{- toYaml . | nindent 8}}
     {{- end }}
-    {{- with .Values.securityContext }}
+    {{- with .Values.podSecurityContext }}
       securityContext:
-      {{- toYaml . | nindent 8}}
+      {{- toYaml . | nindent 8 }}
     {{- end }}
       initContainers:
         {{- if or (eq .Values.job.prefix "default") (eq .Values.job.prefix "attribute") (eq .Values.job.prefix "all") }}
         - name: attribute-service-ready
           image: {{ .Values.waitContainers.image.repository }}:{{ .Values.waitContainers.image.tag }}
+          {{- with .Values.waitContainers.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           imagePullPolicy: IfNotPresent
           command: ["sh", "-c"]
           args: ["until nc -zv {{ .Values.attributeServiceConfig.data.host }} {{ .Values.attributeServiceConfig.data.port }}; \
                   do echo 'waiting for {{ .Values.attributeServiceConfig.data.host }} {{ .Values.attributeServiceConfig.data.port }}'; \
                   sleep 5; done"]
-          {{- with .Values.waitContainers.securityContext }}
+          {{- with .Values.containerSecurityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -65,12 +69,16 @@ spec:
         {{- if or (eq .Values.job.prefix "default") (eq .Values.job.prefix "entity") (eq .Values.job.prefix "all") }}
         - name: entity-service-ready
           image: {{ .Values.waitContainers.image.repository }}:{{ .Values.waitContainers.image.tag }}
+          {{- with .Values.waitContainers.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           imagePullPolicy: IfNotPresent
           command: ["sh", "-c"]
           args: ["until nc -zv {{ .Values.entityServiceConfig.data.host }} {{ .Values.entityServiceConfig.data.port }}; \
                   do echo 'waiting for {{ .Values.entityServiceConfig.data.host }} {{ .Values.entityServiceConfig.data.port }}'; \
                   sleep 5; done"]
-          {{- with .Values.waitContainers.securityContext }}
+          {{- with .Values.containerSecurityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -78,6 +86,10 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          {{- with .Values.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
         {{- if (eq .Values.job.prefix "all") }}
           args: [ "-c", "/etc/config-bootstrapper/application.conf", "-C", "/app/resources/configs/config-bootstrapper", "--upgrade" ]

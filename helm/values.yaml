@@ -106,7 +106,11 @@ logConfig:
       enabled: false
 
 waitContainers:
+  resources: {}
   image:
     repository: busybox
     tag: 1.36.0
   securityContext: {}
+
+containerSecurityContext: {}
+podSecurityContext: {}
