@@ -23,7 +23,9 @@ imagePullSecrets: []
 
 nodeLabels: {}
 
-securityContext: {}
+podSecurityContext: {}
+
+containerSecurityContext: {}
 
 javaOpts: "-Xms256M -Xmx768M"
 
@@ -109,8 +111,4 @@ waitContainers:
   resources: {}
   image:
     repository: busybox
-    tag: 1.36.0
-  securityContext: {}
-
-containerSecurityContext: {}
-podSecurityContext: {}
+    tag: 1.36.1
