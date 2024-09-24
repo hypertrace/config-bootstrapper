@@ -44,9 +44,9 @@ spec:
       nodeSelector:
       {{- toYaml . | nindent 8}}
     {{- end }}
-    {{- with .Values.securityContext }}
+    {{- with .Values.podSecurityContext }}
       securityContext:
-      {{- toYaml . | nindent 8}}
+      {{- toYaml . | nindent 8 }}
     {{- end }}
       initContainers:
         {{- if or (eq .Values.job.prefix "default") (eq .Values.job.prefix "attribute") (eq .Values.job.prefix "all") }}
@@ -57,7 +57,11 @@ spec:
           args: ["until nc -zv {{ .Values.attributeServiceConfig.data.host }} {{ .Values.attributeServiceConfig.data.port }}; \
                   do echo 'waiting for {{ .Values.attributeServiceConfig.data.host }} {{ .Values.attributeServiceConfig.data.port }}'; \
                   sleep 5; done"]
-          {{- with .Values.waitContainers.securityContext }}
+          {{- with .Values.waitContainers.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.containerSecurityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -70,7 +74,11 @@ spec:
           args: ["until nc -zv {{ .Values.entityServiceConfig.data.host }} {{ .Values.entityServiceConfig.data.port }}; \
                   do echo 'waiting for {{ .Values.entityServiceConfig.data.host }} {{ .Values.entityServiceConfig.data.port }}'; \
                   sleep 5; done"]
-          {{- with .Values.waitContainers.securityContext }}
+          {{- with .Values.waitContainers.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.containerSecurityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -79,11 +87,11 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-        {{- if (eq .Values.job.prefix "all") }}
+          {{- if (eq .Values.job.prefix "all") }}
           args: [ "-c", "/etc/config-bootstrapper/application.conf", "-C", "/app/resources/configs/config-bootstrapper", "--upgrade" ]
-        {{- else }}
+          {{- else }}
           args: [ "-c", "/etc/config-bootstrapper/application.conf", "-C", "/app/resources/configs/config-bootstrapper/{{ .Values.job.prefix }}-service", "--upgrade" ]
-        {{- end }}
+          {{- end }}
           env:
             - name: SERVICE_NAME
               value: "{{ .Chart.Name }}"
@@ -111,5 +119,8 @@ spec:
             {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-
+          {{- with .Values.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
   backoffLimit: 100
