@@ -19,10 +19,7 @@ spec:
     metadata:
       labels:
         release: {{ .Release.Name }}
-        {{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
-        {{- with .Values.commonPodLabels }}
+        {{- with merge .Values.podLabels .Values.commonPodLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
       {{- with .Values.commonPodAnnotations }}
