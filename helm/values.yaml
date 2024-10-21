@@ -13,6 +13,7 @@
 ###########
 # Job
 ###########
+appName: config-bootstrapper
 
 image:
   repository: hypertrace/config-bootstrapper
