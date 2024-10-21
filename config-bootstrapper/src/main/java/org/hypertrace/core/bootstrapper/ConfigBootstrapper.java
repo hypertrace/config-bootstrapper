@@ -11,11 +11,14 @@ import org.hypertrace.core.bootstrapper.dao.ConfigBootstrapStatusDao;
 import org.hypertrace.core.documentstore.Datastore;
 import org.hypertrace.core.documentstore.DatastoreProvider;
 import org.hypertrace.core.documentstore.DocumentStoreConfig;
+import org.hypertrace.core.documentstore.model.config.DatastoreConfig;
+import org.hypertrace.core.documentstore.model.config.TypesafeConfigDatastoreConfigExtractor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ConfigBootstrapper {
   private static final Logger LOGGER = LoggerFactory.getLogger(ConfigBootstrapper.class);
+  public static final String DATASTORE_TYPE_CONFIG_KEY = "dataStoreType";
 
   public static void main(String[] args) {
     updateRuntime();
@@ -29,9 +32,15 @@ public class ConfigBootstrapper {
    * */
   public static BootstrapRunner bootstrapper(BootstrapArgs bootstrapArgs) {
     Config config = ConfigFactory.parseFile(new File(bootstrapArgs.getConfigFile())).resolve();
-    String dataStoreType = config.getString(DocumentStoreConfig.DATASTORE_TYPE_CONFIG_KEY);
+    Config documentStoreConfig = config.getConfig("document.store");
+    DatastoreConfig datastoreConfig = TypesafeConfigDatastoreConfigExtractor.from(documentStoreConfig, DATASTORE_TYPE_CONFIG_KEY)
+            .extract();
     Datastore datastore =
-        DatastoreProvider.getDatastore(dataStoreType, config.getConfig(dataStoreType));
+        DatastoreProvider.getDatastore(datastoreConfig);
+
+//    grpcServiceContainerEnvironment.getLifecycle().shutdownComplete().thenRun(datastore::close);
+//    This seems like a shutdown hook, can it go in finalizeBootstrapper()? @suresh
+
     return new BootstrapRunner(new ConfigBootstrapStatusDao(datastore));
   }
 

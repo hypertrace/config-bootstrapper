@@ -103,6 +103,20 @@ spec:
               value: "/var/{{ .Chart.Name }}/log/log4j2.properties"
             - name: JAVA_TOOL_OPTIONS
               value: {{ .Values.javaOpts | quote }}
+            {{- if and .Values.database .Values.database.mongo.authEnabled }}
+            {{- with .Values.database.mongo.credentials }}
+            - name: MONGO_SERVICE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .secretName }}
+                  key: {{ .secretUsernameKey }}
+            - name: MONGO_SERVICE_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .secretName }}
+                  key: {{ .secretPasswordKey }}
+            {{- end }}
+            {{- end }}
             {{- if and (eq .Values.dataStoreType "postgres") .Values.postgresConfig.data.passwordSecretName .Values.postgresConfig.data.passwordSecretKey }}
             - name: POSTGRESQL_PASSWORD
               valueFrom:
