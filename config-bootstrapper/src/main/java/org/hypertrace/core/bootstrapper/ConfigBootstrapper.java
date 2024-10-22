@@ -10,7 +10,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.hypertrace.core.bootstrapper.dao.ConfigBootstrapStatusDao;
 import org.hypertrace.core.documentstore.Datastore;
 import org.hypertrace.core.documentstore.DatastoreProvider;
-import org.hypertrace.core.documentstore.DocumentStoreConfig;
 import org.hypertrace.core.documentstore.model.config.DatastoreConfig;
 import org.hypertrace.core.documentstore.model.config.TypesafeConfigDatastoreConfigExtractor;
 import org.slf4j.Logger;
@@ -38,8 +37,7 @@ public class ConfigBootstrapper {
     Datastore datastore =
         DatastoreProvider.getDatastore(datastoreConfig);
 
-//    grpcServiceContainerEnvironment.getLifecycle().shutdownComplete().thenRun(datastore::close);
-//    This seems like a shutdown hook, can it go in finalizeBootstrapper()? @suresh
+    Runtime.getRuntime().addShutdownHook(new Thread(datastore::close));
 
     return new BootstrapRunner(new ConfigBootstrapStatusDao(datastore));
   }
