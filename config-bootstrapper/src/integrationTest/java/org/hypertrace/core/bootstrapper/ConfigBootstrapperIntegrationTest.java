@@ -19,6 +19,8 @@ import org.hypertrace.core.attribute.service.v1.AttributeScope;
 import org.hypertrace.core.documentstore.Datastore;
 import org.hypertrace.core.documentstore.DatastoreProvider;
 import org.hypertrace.core.documentstore.DocumentStoreConfig;
+import org.hypertrace.core.documentstore.model.config.DatastoreConfig;
+import org.hypertrace.core.documentstore.model.config.TypesafeConfigDatastoreConfigExtractor;
 import org.hypertrace.core.grpcutils.context.RequestContext;
 import org.hypertrace.core.grpcutils.context.RequestContextConstants;
 import org.hypertrace.entity.service.client.config.EntityServiceClientConfig;
@@ -30,6 +32,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.hypertrace.core.bootstrapper.ConfigBootstrapper.DATASTORE_TYPE_CONFIG_KEY;
 import static org.hypertrace.core.bootstrapper.dao.ConfigBootstrapStatusDao.CONFIG_BOOTSTRAPPER_COLLECTION;
 
 public class ConfigBootstrapperIntegrationTest {
@@ -62,9 +65,11 @@ public class ConfigBootstrapperIntegrationTest {
             new TenantIdClientInterceptor(TENANT_ID));
     attributesServiceClient = new AttributeServiceClient(channel);
 
-    String dataStoreType = config.getString(DocumentStoreConfig.DATASTORE_TYPE_CONFIG_KEY);
+    Config documentStoreConfig = config.getConfig("document.store");
+    DatastoreConfig datastoreConfig = TypesafeConfigDatastoreConfigExtractor.from(documentStoreConfig, DATASTORE_TYPE_CONFIG_KEY)
+            .extract();
     Datastore datastore =
-        DatastoreProvider.getDatastore(dataStoreType, config.getConfig(dataStoreType));
+            DatastoreProvider.getDatastore(datastoreConfig);
     datastore.getCollection(CONFIG_BOOTSTRAPPER_COLLECTION).drop();
   }
 

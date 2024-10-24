@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.hypertrace.core.bootstrapper.model.ConfigBootstrapStatus;
 import org.hypertrace.core.bootstrapper.model.ConfigBootstrapStatusKey;
+import org.hypertrace.core.documentstore.CloseableIterator;
 import org.hypertrace.core.documentstore.Datastore;
 import org.hypertrace.core.documentstore.Document;
 import org.hypertrace.core.documentstore.Filter;
@@ -33,15 +34,20 @@ public class ConfigBootstrapStatusDao {
   public ConfigBootstrapStatus getConfigBootstrapStatus(ConfigBootstrapStatusKey key) {
     Query query = new Query();
     query.setFilter(new Filter(Filter.Op.EQ, ID, key.toString()));
-    Iterator<Document> docs = configBootstrapStatusCollection.search(query);
-    if (docs.hasNext()) {
-      Document doc = docs.next();
-      try {
-        return ConfigBootstrapStatus.fromJson(doc.toJson());
-      } catch (IOException ex) {
-        LOGGER.error(String.format("Error creating ConfigBootstrapStatus from doc:%s", doc), ex);
-        return null;
+    try (final CloseableIterator<Document> docsIterator =
+                 configBootstrapStatusCollection.search(query)){
+      if (docsIterator.hasNext()) {
+        Document doc = docsIterator.next();
+        try {
+          return ConfigBootstrapStatus.fromJson(doc.toJson());
+        } catch (IOException ex) {
+          LOGGER.error(String.format("Error creating ConfigBootstrapStatus from doc:%s", doc), ex);
+          return null;
+        }
       }
+    } catch (IOException e) {
+      LOGGER.error("Error in query: {}", query);
+      return null;
     }
     return null;
   }
@@ -65,22 +71,26 @@ public class ConfigBootstrapStatusDao {
   public List<ConfigBootstrapStatus> getConfigBootstrapStatusGreaterThan(int version) {
     Query query = new Query();
     query.setFilter(new Filter(Filter.Op.GT, VERSION, version));
-    Iterator<Document> docs = configBootstrapStatusCollection.search(query);
-    return StreamSupport.stream(Spliterators.spliteratorUnknownSize(docs, 0), false)
-        .map(
-            document -> {
-              try {
-                return ConfigBootstrapStatus.fromJson(document.toJson());
-              } catch (IOException ex) {
-                LOGGER.error("Error creating ConfigBootstrapStatus from doc:{}", document);
-                return null;
-              }
-            })
-        .filter(Objects::nonNull)
-        // sort from higher version to lower version
-        .sorted(
-            (c1, c2) ->
-                ConfigBootstrapStatusKey.from(c2).compareTo(ConfigBootstrapStatusKey.from(c1)))
-        .collect(Collectors.toList());
+    try(final CloseableIterator<Document> docs = configBootstrapStatusCollection.search(query)){
+      return StreamSupport.stream(Spliterators.spliteratorUnknownSize(docs, 0), false)
+              .map(
+                      document -> {
+                        try {
+                          return ConfigBootstrapStatus.fromJson(document.toJson());
+                        } catch (IOException ex) {
+                          LOGGER.error("Error creating ConfigBootstrapStatus from doc:{}", document);
+                          return null;
+                        }
+                      })
+              .filter(Objects::nonNull)
+              // sort from higher version to lower version
+              .sorted(
+                      (c1, c2) ->
+                              ConfigBootstrapStatusKey.from(c2).compareTo(ConfigBootstrapStatusKey.from(c1)))
+              .collect(Collectors.toList());
+    } catch (IOException e) {
+      LOGGER.error("Error in query: {}", query);
+      return null;
+    }
   }
 }
