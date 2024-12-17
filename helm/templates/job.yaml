@@ -91,10 +91,11 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [ "sh", "-c" ]
           {{- if (eq .Values.job.prefix "all") }}
-          args: [ "-c", "/etc/config-bootstrapper/application.conf", "-C", "/app/resources/configs/config-bootstrapper", "--upgrade" ]
+          args: [ "sleep 300; /app/config-bootstrapper -c /etc/config-bootstrapper/application.conf -C /app/resources/configs/config-bootstrapper --upgrade" ]
           {{- else }}
-          args: [ "-c", "/etc/config-bootstrapper/application.conf", "-C", "/app/resources/configs/config-bootstrapper/{{ .Values.job.prefix }}-service", "--upgrade" ]
+          args: [ "sleep 300; /app/config-bootstrapper -c /etc/config-bootstrapper/application.conf -C /app/resources/configs/config-bootstrapper/{{ .Values.job.prefix }}-service --upgrade" ]
           {{- end }}
           env:
             - name: SERVICE_NAME
