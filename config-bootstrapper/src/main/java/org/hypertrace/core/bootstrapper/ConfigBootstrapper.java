@@ -37,7 +37,7 @@ public class ConfigBootstrapper {
     Datastore datastore =
         DatastoreProvider.getDatastore(datastoreConfig);
 
-    Runtime.getRuntime().addShutdownHook(new Thread(datastore::close));
+//    Runtime.getRuntime().addShutdownHook(new Thread(datastore::close));
 
     return new BootstrapRunner(new ConfigBootstrapStatusDao(datastore));
   }
