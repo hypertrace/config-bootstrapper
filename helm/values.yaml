@@ -102,6 +102,7 @@ waitContainers:
     tag: 1.36.1
 
 database:
+  type: mongo
   mongo:
     database: default_db
     user: ${?MONGO_SERVICE_USERNAME}
