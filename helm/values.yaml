@@ -100,3 +100,10 @@ waitContainers:
   image:
     repository: busybox
     tag: 1.36.1
+
+database:
+  type: mongo
+  mongo:
+    database: default_db
+    user: ${?MONGO_SERVICE_USERNAME}
+    password: ${?MONGO_SERVICE_USER_PASSWORD}
